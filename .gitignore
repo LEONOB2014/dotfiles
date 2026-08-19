@@ -1,2 +1,6 @@
 .DS_Store
 .claude/settings.local.json
+
+# vim-plug installs plugins into ~/.vim/plugged, which resolves into this
+# repo since vim/.vim is stowed — never track the actual plugin checkouts
+vim/.vim/plugged/

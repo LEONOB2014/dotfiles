@@ -2,7 +2,10 @@
 
 Personal macOS dotfiles for Andrés Becerra, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 Each top-level directory is a **stow package**: its contents mirror the layout
-of `$HOME`, and `stow <package>` symlinks everything into place.
+of `$HOME`, and `stow <package>` symlinks everything into place. `./install.sh`
+replicates the whole setup — packages, plugins, and everything they need —
+on a fresh machine, VM, or remote server in one run; see
+[Quick install](#quick-install-fresh-machine-vm-remote-server).
 
 | Package    | Tool(s)                          | What it configures |
 |------------|-----------------------------------|---------------------|
@@ -15,27 +18,36 @@ of `$HOME`, and `stow <package>` symlinks everything into place.
 | `atuin`    | [Atuin](https://atuin.sh)          | Shell history sync/search |
 | `git`      | git, [delta](https://github.com/dandavison/delta) | Identity, global gitignore, delta as diff pager |
 
-## Prerequisites
-
-Install GNU Stow, then the tools you want configured:
-
-```sh
-brew install stow
-brew install neovim vim tmux antidote starship eza bat ripgrep fd \
-             atuin lazygit git-delta tealdeer jq yq gh zoxide fzf
-brew install --cask ghostty
-```
-
-`nvim` additionally needs a [Nerd Font](https://www.nerdfonts.com) for icons
-(JetBrainsMono Nerd Font is what `ghostty`'s config assumes) and `tmux` needs
-[TPM](https://github.com/tmux-plugins/tpm) installed at `~/.tmux/plugins/tpm`
-for its plugin list to load.
-
-## Installation
+## Quick install (fresh machine / VM / remote server)
 
 ```sh
 git clone <this-repo-url> ~/dotfiles
 cd ~/dotfiles
+./install.sh
+```
+
+`install.sh` is idempotent (safe to re-run) and does everything end to end:
+installs Homebrew if missing, runs `brew bundle` against the `Brewfile`
+(all CLI tools + Ghostty + the Nerd Font), symlinks all 8 packages with
+`stow`, installs TPM and syncs tmux plugins headlessly, installs vim-plug's
+plugins and nvim's lazy.nvim plugins headlessly, and installs `uv`/`bun`
+(the two tools `zsh/.zshrc` references directly). It prints a short list of
+manual follow-ups at the end (setting zsh as your default shell, and a few
+proprietary/personal tools — conda, Antigravity — that aren't automated
+since they're not part of this repo). See `install.sh` for exact steps, and
+`Brewfile` for the full package list.
+
+On Linux, `install.sh` skips the cask entries (Ghostty, Nerd Font — macOS
+only) and installs everything else; a couple of things assume macOS
+regardless (tmux's copy-mode binds to `pbcopy`).
+
+## Manual / partial install
+
+Prefer to install package-by-package instead of running the full script:
+
+```sh
+brew install stow
+brew bundle --file=Brewfile   # or hand-pick from it
 
 # Dry-run first to check for conflicts with existing files
 stow -nv nvim vim tmux zsh ghostty starship atuin git
@@ -50,10 +62,16 @@ confirmed it's not something worth keeping) and re-run `stow`. To remove a
 package's symlinks, run `stow -D <package>`; to relink after editing a
 package's structure, `stow -R <package>`.
 
+Plugin managers (TPM for tmux, vim-plug for vim, lazy.nvim for nvim) still
+need their install/sync step run once — see the corresponding numbered
+section in `install.sh` if you're doing this by hand.
+
 ## Structure
 
 ```
 dotfiles/
+├── install.sh                   # bootstrap script — see "Quick install"
+├── Brewfile                      # every formula/cask install.sh installs
 ├── nvim/.config/nvim/          # init.lua -> lua/andres/{core,plugins,lsp}
 ├── vim/.vimrc, .vim/            # legacy vim config + plugins
 ├── tmux/.tmux.conf
@@ -105,10 +123,22 @@ e.g. `~/.config/nvim/init.lua -> ~/dotfiles/nvim/.config/nvim/init.lua`.
 - `.DS_Store` files are excluded via `.gitignore`; if `stow` ever complains
   about one blocking a link, delete it rather than adopting it.
 - Tools without an entry in this repo (zoxide, fzf, eza, bat, ripgrep, fd,
-  tldr, jq, yq, gh, telescope) have no dedicated config file — they run on
-  their built-in defaults, driven entirely by the aliases/`eval "$(... init
-  zsh)"` lines in `zsh/.zshrc`. Telescope specifically is an nvim plugin,
-  configured under `nvim/.config/nvim/lua/andres/plugins/telescope.lua`.
+  tldr, jq, yq, gh, direnv, node, telescope) have no dedicated config file —
+  they run on their built-in defaults, driven entirely by the aliases/
+  `eval "$(... init zsh)"` lines in `zsh/.zshrc`. Telescope specifically is
+  an nvim plugin, configured under
+  `nvim/.config/nvim/lua/andres/plugins/telescope.lua`.
+- `uv` and `bun` are installed by `install.sh` via their official installer
+  scripts (not Homebrew) specifically because `.zshrc` sources
+  `~/.local/bin/env` (created only by uv's installer) and
+  `~/.bun/_bun` completions — installing via Homebrew instead would leave
+  those lines pointing at files that don't exist.
+- `node` is in the `Brewfile` solely so nvim's Mason (see nvim's
+  `lsp/mason.lua`) has npm available to install the npm-based language
+  servers it manages (`ts_ls`, `html`, `cssls`, `tailwindcss`, `svelte`,
+  `graphql`, `emmet_ls`, `prismals`). Mason installs/updates those (plus
+  `pyright`, `stylua`, `prettier`, `black`, `isort`, `pylint`, `eslint_d`)
+  itself on nvim startup — nothing to do manually.
 
 ## Authors
 

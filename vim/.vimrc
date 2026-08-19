@@ -18,7 +18,7 @@ Plug 'editorconfig/editorconfig-vim'
 " Search
 Plug 'romainl/vim-cool'               " Disables highlight when search is done
 Plug 'haya14busa/incsearch.vim'       " Better incremental search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " FZF plugin, makes Ctrl-P unnecessary
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }  " FZF plugin, makes Ctrl-P unnecessary; --no-update-rc since fzf's zsh integration is already managed by zsh/.zshrc
 Plug 'junegunn/fzf.vim'
 " Plug 'airblade/vim-rooter'
 
