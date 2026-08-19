@@ -5,7 +5,10 @@ Each top-level directory is a **stow package**: its contents mirror the layout
 of `$HOME`, and `stow <package>` symlinks everything into place. `./install.sh`
 replicates the whole setup — packages, plugins, and everything they need —
 on a fresh machine, VM, or remote server in one run; see
-[Quick install](#quick-install-fresh-machine-vm-remote-server).
+[Quick install](#quick-install-fresh-machine-vm-remote-server). For how to
+actually *use* this stack day to day — commands, keybinds, and workflows
+for Python/ML, agents, and cloud work — see
+[`docs/STACK-GUIDE.md`](docs/STACK-GUIDE.md).
 
 | Package    | Tool(s)                          | What it configures |
 |------------|-----------------------------------|---------------------|
