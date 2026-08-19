@@ -1,0 +1,18 @@
+# Personal git config — maintained by Andrés Becerra with Claude (Anthropic)
+# core.excludesfile defaults to ~/.config/git/ignore automatically (XDG), no
+# explicit setting needed — see the ignore file alongside this one.
+
+[user]
+	name = Andrés Becerra
+	email = aleonardobecerra@gmail.com
+
+[core]
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	dark = true
+	line-numbers = true

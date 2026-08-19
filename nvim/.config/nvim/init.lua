@@ -1,0 +1,5 @@
+-- Personal Neovim config — maintained by Andrés Becerra with Claude (Anthropic)
+-- Base layout originally adapted from Josean Martinez's nvim config (see README)
+require("andres.core")
+require("andres.lazy")
+require("andres.lsp")

@@ -1,0 +1,8 @@
+# Essential
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
+
+# Optional quality-of-life
+Aloxaf/fzf-tab                    # better tab completion with fzf

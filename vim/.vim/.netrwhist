@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec/exercises'
+let g:netrw_dirhist_6='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec'
+let g:netrw_dirhist_5='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec/exercises'
+let g:netrw_dirhist_4='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec'
+let g:netrw_dirhist_3='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec/exercises'
+let g:netrw_dirhist_2='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec/exercises/.venv'
+let g:netrw_dirhist_1='/Users/andresbecerra/Documents/AI_Eng_2026/Coursera/Discrete-math-spec/exercises'
